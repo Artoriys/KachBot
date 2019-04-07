@@ -26,6 +26,7 @@ class WikiCommand {
             parseURLresponse();
         } catch (Exception e) {
             e.printStackTrace();
+            return "I can't find anything :(";
         }
 
         return buildReturnLinkAndDesc();
