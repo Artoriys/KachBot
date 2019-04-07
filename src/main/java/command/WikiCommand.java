@@ -42,7 +42,7 @@ class WikiCommand {
         Matcher RUWikiMather = RUWikiPattern.matcher(wordToSearch);
 
         if (ENWikiMather.matches()) {
-            urlBuilder.append("en.wikipedia.org/w/api.php?action=opensearch&format=xml&search=")
+            urlBuilder.append("en.wikipedia.org/w/api.php?action=opensearch&format=xml&search=" )
                       .append(wordToSearch)
                       .append("&limit=1&utf8=1");
         }
