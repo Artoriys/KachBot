@@ -7,7 +7,7 @@ import javax.security.auth.login.LoginException;
 public class Main {
     private TextListener textListener = new TextListener();
     private JDABuilder builder;
-    private static final String TOKEN = "NTU2Nzc5Mjc0MzQzMDIyNTk0.D2-tmg.B9vdeTk7r8kzbiQpAkc4edakMMo";
+    private static final String TOKEN = System.getenv().get("BOT_TOKEN");
 
     public static void main(String[] args) {
        new Main().startBot();
