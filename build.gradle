@@ -4,12 +4,10 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '4.0.2'
 }
 
-mainClassName = "Main"
-
 group 'com.kachbot'
 version '1.0-SNAPSHOT'
-
 sourceCompatibility = 1.8
+mainClassName = "Main"
 
 repositories {
     mavenCentral()
@@ -17,7 +15,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-task stage(dependsOn: ['build', 'clean'])
+task stage(dependsOn: ['build'])
 
 
 dependencies {
@@ -25,6 +23,8 @@ dependencies {
     compile 'net.dv8tion:JDA:3.8.3_462'
 }
 
-run {
-    standardOutput = System.out
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
 }
