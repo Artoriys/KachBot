@@ -15,7 +15,7 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-task stage(dependsOn: ['build'])
+task stage(dependsOn: ['shadowJar'])
 
 
 dependencies {
@@ -25,6 +25,6 @@ dependencies {
 
 shadowJar {
     manifest {
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': mainClassName
     }
 }
