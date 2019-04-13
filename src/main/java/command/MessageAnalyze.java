@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 class MessageAnalyze {
 
     private String message;
-    //private WikiCommand wikiCommand = new WikiCommand();
     private Pattern commandPattern;
     private Matcher commandMathcher;
     private String commandAttribute;
