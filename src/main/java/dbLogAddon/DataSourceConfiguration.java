@@ -22,6 +22,7 @@ public class DataSourceConfiguration {
         MYSQL_DATA_SOURCE.setMaxIdle(5);
         MYSQL_DATA_SOURCE.setMaxOpenPreparedStatements(10);
         MYSQL_DATA_SOURCE.setValidationQuery("select id from message_logs");
+        MYSQL_DATA_SOURCE.setTestWhileIdle(true);
         MYSQL_DATA_SOURCE.setTestOnBorrow(true);
     }
 
