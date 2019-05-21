@@ -24,6 +24,8 @@ dependencies {
     compile 'net.dv8tion:JDA:3.8.3_462'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
+
 
 }
 
