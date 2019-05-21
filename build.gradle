@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '4.0.2'
+    id "com.heroku.sdk.heroku-gradle" version "1.0.4"
 }
 
 group 'com.kachbot'
@@ -21,10 +22,20 @@ task stage(dependsOn: ['shadowJar'])
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'net.dv8tion:JDA:3.8.3_462'
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
 }
 
 shadowJar {
     manifest {
         attributes 'Main-Class': mainClassName
     }
+}
+
+heroku {
+    appName = "KachBot"
+    processTypes(
+            worker: "java -jar build/libs/KachBot-1.0-SNAPSHOT-all.jar"
+    )
 }
