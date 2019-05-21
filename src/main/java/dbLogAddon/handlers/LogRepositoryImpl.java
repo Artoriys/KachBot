@@ -15,9 +15,8 @@ public class LogRepositoryImpl implements LogRepository {
 
     @Override
     public void saveMassage(Message message) {
-        Connection connection = DataSourceConfiguration.getConnection();
         String query = "insert into message_logs (date, user, channel_name, message) values (?, ?, ?, ?)";
-        try {
+        try (Connection connection = DataSourceConfiguration.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setTimestamp(1, Timestamp.valueOf(message.getLocalDateTime()));
             preparedStatement.setString(2, message.getUser());
