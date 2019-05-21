@@ -21,6 +21,12 @@ public class DataSourceConfiguration {
         MYSQL_DATA_SOURCE.setURL(envVar.get("url"));
         MYSQL_DATA_SOURCE.setUser(envVar.get("username"));
         MYSQL_DATA_SOURCE.setPassword(envVar.get("password"));
+        try {
+            MYSQL_DATA_SOURCE.setAutoReconnect(true);
+            MYSQL_DATA_SOURCE.setAutoReconnectForPools(true);
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
     }
 
     private DataSourceConfiguration() {
