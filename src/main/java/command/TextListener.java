@@ -6,7 +6,7 @@ import lombok.extern.log4j.Log4j;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-@Log4j(topic = "message")
+@Log4j(topic = "file")
 public class TextListener extends ListenerAdapter {
     private LogRepositoryImpl logRepository = new LogRepositoryImpl();
 
@@ -16,9 +16,6 @@ public class TextListener extends ListenerAdapter {
         if (event.getAuthor().isBot()) {
             return;
         }
-        log.info(event.getAuthor().getName()
-                + " : "
-                + event.getMessage().getContentDisplay());
         logRepository.saveMassage(new Message(event));
 
         command = event.getMessage().getContentRaw();
