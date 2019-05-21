@@ -46,9 +46,7 @@ public class DataSourceConfiguration {
 
     public static Connection getConnection() {
         makeConnectionPool();
-        Connection connection = CONNECTIONS.get(0);
-        CONNECTIONS.remove(0);
-        return connection;
+        return CONNECTIONS.remove(0);
     }
 }
 
