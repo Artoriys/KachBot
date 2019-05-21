@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.entities.Message.Attachment;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -19,7 +21,16 @@ public class Message {
     public Message(MessageReceivedEvent event){
         this.user = event.getAuthor().getName();
         this.localDateTime = event.getMessage().getCreationTime().toLocalDateTime();
-        this.message = event.getMessage().getContentDisplay();
+        this.message = checkForAttachments(event);
         this.channel = event.getChannel().getName();
+    }
+
+    private String checkForAttachments(MessageReceivedEvent event) {
+        String result = event.getMessage().getContentDisplay();
+        List<Attachment> attachments = event.getMessage().getAttachments();
+        if (result.equals("") && !attachments.isEmpty()) {
+            result = attachments.get(0).getUrl();
+        }
+        return result;
     }
 }
