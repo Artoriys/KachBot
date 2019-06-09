@@ -1,4 +1,9 @@
-package command;
+package messages_control;
+
+import messages_control.commands.joke.JokeCommand;
+import messages_control.commands.play.PlayCommand;
+import messages_control.commands.wiki.WikiCommandParser;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,13 +11,13 @@ import java.util.regex.Pattern;
 class MessageAnalyze {
 
     private String message;
-    private Pattern commandPattern;
     private Matcher commandMathcher;
-    private String commandAttribute;
+    private MessageReceivedEvent event;
 
-    MessageAnalyze(String message) {
-        this.message = message;
-        commandPattern = Pattern.compile("^!(\\w+?)( (.*)?$|$)");
+    MessageAnalyze(MessageReceivedEvent event) {
+        this.event = event;
+        this.message = event.getMessage().getContentRaw();
+        Pattern commandPattern = Pattern.compile("^!(\\w+?)( (.*)?$|$)");
         commandMathcher = commandPattern.matcher(this.message);
     }
 
@@ -29,7 +34,6 @@ class MessageAnalyze {
     private String analyzeMessage() {
         String result = "";
         if (commandMathcher.matches()) {
-            commandAttribute = commandMathcher.group(3);
             result = chooseCommand(commandMathcher.group(1));
         }
 
@@ -38,7 +42,7 @@ class MessageAnalyze {
     }
 
     private String chooseCommand(String command) {
-        String result = "I don't know this command";
+        String result = "I don't know this command :(";
         switch (command) {
             case "gif":
                 result = "I don't have gifs";
@@ -48,13 +52,17 @@ class MessageAnalyze {
                 result = "ahh";
                 break;
 
+            case "play":
+                PlayCommand playCommand = new PlayCommand(event);
+                playCommand.play();
+                break;
+
             case "joke":
-                result = "Your mam is fat!!";
+                result = new JokeCommand().getJoke();
                 break;
 
             case "wiki":
-                WikiCommand wikiCommand = new WikiCommand(commandAttribute);
-                result = wikiCommand.getLinkToWikiByMessage();
+                result = WikiCommandParser.parse(message);
                 break;
         }
         return result;

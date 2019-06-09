@@ -1,7 +1,8 @@
-import command.TextListener;
+import messages_control.TextListener;
 import lombok.extern.log4j.Log4j;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 
 import javax.security.auth.login.LoginException;
 
@@ -20,6 +21,7 @@ public class Main {
         builder = new JDABuilder(AccountType.BOT);
         builder.setToken(TOKEN);
         builder.addEventListener(textListener);
+        builder.setGame(Game.of(Game.GameType.STREAMING, "Sema Pidr"));
         log.info("Bot configuration complete");
     }
 

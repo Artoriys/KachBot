@@ -1,4 +1,4 @@
-package command;
+package messages_control;
 
 import dbLogAddon.handlers.LogRepositoryImpl;
 import dbLogAddon.model.Message;
@@ -17,10 +17,10 @@ public class TextListener extends ListenerAdapter {
             return;
         }
         logRepository.saveMassage(new Message(event));
-
         command = event.getMessage().getContentRaw();
+
         if (MessageAnalyze.isCommandToBot(command)) {
-            MessageAnalyze analyze = new MessageAnalyze(command);
+            MessageAnalyze analyze = new MessageAnalyze(event);
             event.getChannel().sendMessage(analyze.makeMessage()).queue();
         }
     }

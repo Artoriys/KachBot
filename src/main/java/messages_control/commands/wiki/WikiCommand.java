@@ -1,4 +1,4 @@
-package command;
+package messages_control.commands.wiki;
 //TODO Making exceptions more useful
 
 import org.w3c.dom.Document;
@@ -9,19 +9,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-class WikiCommand {
-    private String wordToSearch;
+public class WikiCommand {
     private StringBuilder urlBuilder = new StringBuilder("https://");
     private String[] parsedStrings = new String[2];
 
-
-    WikiCommand(String wordToSearch) {
-        this.wordToSearch = checkForSpaces(wordToSearch);
-    }
-
-    String getLinkToWikiByMessage() {
-        buildURL();
+    public String getLinkToWikiByMessage(String wordToSearch) {
+        buildURL(checkForSpaces(wordToSearch));
         try {
             parseURLresponse();
         } catch (Exception e) {
@@ -31,8 +24,7 @@ class WikiCommand {
         return buildReturnLinkAndDesc();
     }
 
-
-    private void buildURL() {
+    private void buildURL(String wordToSearch) {
         Pattern ENWikiPattern = Pattern.compile("(\\w*)");
         Matcher ENWikiMather = ENWikiPattern.matcher(wordToSearch);
 
