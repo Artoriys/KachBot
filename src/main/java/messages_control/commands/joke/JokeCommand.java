@@ -16,7 +16,7 @@ public class JokeCommand {
 
     public JokeCommand() {
         try {
-            String json = new Scanner(new URL(url).openStream(), StandardCharsets.UTF_8).useDelimiter("\\A").next();
+            String json = new Scanner(new URL(url).openStream(), StandardCharsets.UTF_8.name()).useDelimiter("\\A").next();
             jsonObject = new JSONObject(json);
         } catch (IOException e) {
             log.error(e);
