@@ -57,14 +57,12 @@ class WikiCommand {
         Document document = dBuilder.parse(urlBuilder.toString());
         document.getDocumentElement().normalize();
         NodeList urlNode = document.getDocumentElement().getElementsByTagName("Url");
-        NodeList descNode = document.getDocumentElement().getElementsByTagName("Description");
 
-        parsedStrings[0] = descNode.item(0).getTextContent();
-        parsedStrings[1] = urlNode.item(0).getTextContent();
+        parsedStrings[0] = urlNode.item(0).getTextContent();
     }
 
     private String buildReturnLinkAndDesc() {
-        return parsedStrings[0] + "\n" + parsedStrings[1];
+        return parsedStrings[0];
     }
 
     private String checkForSpaces(String message) {
