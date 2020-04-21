@@ -1,1 +1,1 @@
-worker: java -jar build/libs/KachBot-1.0-SNAPSHOT-all.jar
+worker: java -jar build/libs/KachBot-1.0-all.jar
