@@ -10,7 +10,7 @@ object BotConfigurator extends Logging {
   def botConfigure(): JDABuilder = {
     builder.setToken(TOKEN)
     builder.addEventListener(textListener)
-    builder.setGame(Game.playing("Arma 3: Tushino Edition"))
+    builder.setGame(Game.playing("Anime with Sema"))
     log.info("Bot configuration complete")
     builder
   }

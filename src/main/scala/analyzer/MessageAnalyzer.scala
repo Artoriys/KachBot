@@ -8,11 +8,11 @@ class MessageAnalyzer {
     val subCommands = command.split(" ").toList
 
     subCommands.head.substring(1) match {
-      case "gif" => "I like static. Dynamic is shit"
-      case "oh" => "Ah-ah"
+      case "gif" => "***I like static. Dynamic is shit***"
+      case "oh" => "***Ah-ah***"
       case "joke" => new JokeCommand().getRandomJoke
-      case "wiki" => new WikiCommand().searchAndMakeResponse(subCommands)
-      case _ => s"I don't know this command. Try on of these: ${analyzer.knownCommands.mkString("\n")}"
+      case "wiki" => new WikiCommand().searchAndMakeResponse(subCommands.drop(1))
+      case _ => s"***I don't know this command. Try on of these: \n${analyzer.knownCommands.mkString("\n")}***"
     }
   }
 }

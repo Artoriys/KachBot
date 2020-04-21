@@ -2,7 +2,7 @@ package commands
 
 import org.json4s.DefaultFormats
 
-import scala.io.Source
+import scala.io.{Codec, Source}
 import org.json4s.native.JsonMethods.parse
 
 class JokeCommand {
@@ -11,6 +11,7 @@ class JokeCommand {
 
 
   def getRandomJoke: String = {
+    implicit val codec: Codec = Codec.UTF8
 
     val buffer = Source.fromURL(url)
     val urlContent = buffer.mkString("")
@@ -19,7 +20,7 @@ class JokeCommand {
     val setup = extractJsonField(urlContent, "setup")
     val punchline = extractJsonField(urlContent, "punchline")
 
-    setup + "\n" + punchline
+    s"***$setup \n\n $punchline***"
   }
 
 
