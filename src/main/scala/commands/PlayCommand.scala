@@ -52,15 +52,21 @@ class PlayCommand {
   }
 
   def list(): String = {
-    np() +
-      s"\n\n***Queue contains ${kachMng.scheduler.queue.length} tracks \n\n" +
-      s"List of tracks:\n ${kachMng.scheduler.queue.map(_.getInfo.title).mkString("\n")}***"
+    val queue = kachMng.scheduler.queue
+
+    if (queue.isEmpty) {
+      "***Queue is empty***"
+    } else {
+      np() +
+        s"\n\n***Queue contains ${queue.length} tracks \n\n" +
+        s"List of tracks:\n ${queue.map(_.getInfo.title).mkString("\n")}***"
+    }
   }
 
   def skip(): String = {
     val playingTrackTitle = kachMng.scheduler.audioPlayer.getPlayingTrack.getInfo.title
     kachMng.scheduler.nextTrack()
-    s"***Skipping \n$playingTrackTitle***"
+    s"***Skipping $playingTrackTitle***"
   }
 
   def volume(vol: String): String = {
@@ -112,4 +118,5 @@ class PlayCommand {
 
     override def loadFailed(exception: FriendlyException): Unit = {}
   }
+
 }
