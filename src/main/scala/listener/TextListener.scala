@@ -14,10 +14,10 @@ class TextListener extends ListenerAdapter {
 
       logRepository.saveMassage(new Message(event))
 
-      val command = event.getMessage.getContentRaw
+      //val command = event.getMessage.getContentRaw
 
-      if (MessageAnalyzer.isCommandToBot(command)) {
-        val response = new MessageAnalyzer().analyzeMessageAndMakeResponse(command)
+      if (MessageAnalyzer.isCommandToBot(event)) {
+        val response = new MessageAnalyzer().analyzeEventAndMakeResponse(event)
 
         event.getChannel.sendMessage(response).queue()
       }
