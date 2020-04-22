@@ -13,7 +13,8 @@ class TextListener extends ListenerAdapter {
   override def onMessageReceived(event: MessageReceivedEvent): Unit = {
     if (!event.getAuthor.isBot) {
 
-      logRepository.saveMassage(new Message(event))
+      //Maybe we don't need it anymore
+      //logRepository.saveMassage(new Message(event))
 
       if (MessageAnalyzer.isCommandToBot(event)) {
         val response = msgAnalyzer.analyzeEventAndMakeResponse(event)
