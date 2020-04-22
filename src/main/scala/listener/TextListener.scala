@@ -3,8 +3,8 @@ package listener
 import analyzer.MessageAnalyzer
 import dbLogAddon.handlers.LogRepositoryImpl
 import dbLogAddon.model.Message
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent
-import net.dv8tion.jda.core.hooks.ListenerAdapter
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.hooks.ListenerAdapter
 
 class TextListener extends ListenerAdapter {
   private val logRepository = new LogRepositoryImpl

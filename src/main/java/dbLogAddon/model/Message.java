@@ -3,8 +3,8 @@ package dbLogAddon.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.entities.Message.Attachment;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.Message.Attachment;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Message {
 
     public Message(MessageReceivedEvent event){
         this.user = event.getAuthor().getName();
-        this.localDateTime = event.getMessage().getCreationTime().toLocalDateTime();
+        this.localDateTime = event.getMessage().getTimeCreated().toLocalDateTime();
         this.message = checkForAttachments(event);
         this.channel = event.getChannel().getName();
     }

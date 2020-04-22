@@ -1,16 +1,15 @@
 import listener.TextListener
-import net.dv8tion.jda.core.entities.Game
-import net.dv8tion.jda.core.{AccountType, JDABuilder}
+import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 
 object BotConfigurator extends Logging {
   private val textListener = new TextListener
-  private val builder = new JDABuilder(AccountType.BOT)
   private val TOKEN = sys.env("BOT_TOKEN")
 
   def botConfigure(): JDABuilder = {
-    builder.setToken(TOKEN)
-    builder.addEventListener(textListener)
-    builder.setGame(Game.playing("Anime with Sema"))
+    val builder = JDABuilder.createDefault(TOKEN)
+    builder.addEventListeners(textListener)
+    builder.setActivity(Activity.playing("Anime with Sema"))
     log.info("Bot configuration complete")
     builder
   }
