@@ -88,9 +88,11 @@ class PlayCommand {
     "***Shuffling queue!***"
   }
 
-  def np(): String = {
-    s"***Now playing ${kachMng.audioPlayer.getPlayingTrack.getInfo.title}***"
-  }
+  def np(): String =
+    Option(kachMng.audioPlayer.getPlayingTrack) match {
+      case Some(track) => s"***Now playing ${track.getInfo.title}***"
+      case None => "***No track playing now!***"
+    }
 
   def down(event: MessageReceivedEvent): String = {
     reset(event)
