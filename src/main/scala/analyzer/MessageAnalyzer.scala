@@ -1,6 +1,6 @@
 package analyzer
 
-import commands.{JokeCommand, PlayCommand, WikiCommand}
+import commands.{HelpCommand, JokeCommand, PlayCommand, WikiCommand}
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
 class MessageAnalyzer {
@@ -8,18 +8,21 @@ class MessageAnalyzer {
   val playCommand = new PlayCommand()
   val jokeCommand = new JokeCommand()
   val wikiCommand = new WikiCommand()
+  val helpCommand = new HelpCommand()
 
   def analyzeEventAndMakeResponse(event: MessageReceivedEvent): String = {
     val command = event.getMessage.getContentRaw
     val subCommands = command.split(" ").toList
 
     subCommands.head.substring(1) match {
+      //General commands
+      case "help" => helpCommand.help()
 
       //Joke commands
-      case "joke" => jokeCommand.getRandomJoke
+      case "joke" => jokeCommand.joke()
 
       //Wiki commands
-      case "w" => wikiCommand.searchAndMakeResponse(subCommands.drop(1))
+      case "w" => wikiCommand.w(subCommands.drop(1))
 
       //Audio play commands
       case "add" => playCommand.add(subCommands.last)

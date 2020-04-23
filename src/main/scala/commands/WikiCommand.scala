@@ -8,14 +8,14 @@ import org.json4s.{DefaultFormats, JArray}
 import scala.io.{Codec, Source}
 import org.json4s.native.JsonMethods.parse
 
-class WikiCommand {
+class WikiCommand extends BotCommand {
 
   private val searchQuery = "https://%s.wikipedia.org/w/api.php?action=opensearch&namespace=0&utf8=1&limit=1&format=json&search=%s"
   private val NAME_TYPE = 1
   private val URL_TYPE = 3
 
-  def searchAndMakeResponse(subcommands: List[String]): String = {
-    val searchStr = makeSearchString(subcommands)
+  def w(searchedWords: List[String]): String = {
+    val searchStr = makeSearchedString(searchedWords)
 
     if ("[А-Яа-я0-9ё_ ]*".r matches searchStr) {
       makeRequestAndParseResponse(searchQuery.format("ru", encode(searchStr)))
@@ -24,8 +24,8 @@ class WikiCommand {
     }
   }
 
-  private def makeSearchString(subcommands: List[String]): String =
-    subcommands.mkString("_")
+  private def makeSearchedString(searchedWords: List[String]): String =
+    searchedWords.mkString("_")
 
   private def makeRequestAndParseResponse(query: String): String = {
     implicit val codec: Codec = Codec.UTF8

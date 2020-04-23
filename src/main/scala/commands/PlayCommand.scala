@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import scala.jdk.CollectionConverters._
 import scala.util.Random
 
-class PlayCommand {
+class PlayCommand extends BotCommand {
 
   val playerManager: DefaultAudioPlayerManager = new DefaultAudioPlayerManager()
   val kachMng = new KachBotMusicManager(playerManager)
