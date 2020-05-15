@@ -44,7 +44,7 @@ class MessageAnalyzer {
       case "dawai" => playCommand.add("https://www.youtube.com/watch?v=b5I4ql_XI24")
       case "marry" => "***Popins?***"
 
-      case _ => s"***I don't know this command. Try one of these: \n${analyzer.knownCommands.mkString("\n")}***"
+      case _ => s"***I don't know this command. Try use !help***"
     }
   }
 }
@@ -53,5 +53,11 @@ object MessageAnalyzer {
   def isCommandToBot(event: MessageReceivedEvent): Boolean = {
     val command = event.getMessage.getContentRaw
     command.startsWith("!") && command.length > 1
+  }
+
+  def isDiceRollCommand(event: MessageReceivedEvent): Boolean = {
+    val command = event.getMessage.getContentRaw
+    val diceRegEx = "^(\\d+d\\d+)($|\\s.*$)".r
+    diceRegEx.matches(command)
   }
 }
