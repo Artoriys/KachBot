@@ -14,7 +14,7 @@ class DiceCommand extends BotCommand {
 
     splittedCommands match {
       case listCommands if listCommands.size == 1 => imitateDice(listCommands(0), nameOfTheRoller)
-      case listCommands if listCommands.size > 1 && listCommands(1) == "cap" =>
+      case listCommands if listCommands.size == 3 && listCommands(1) == "cap" =>
         imitateDiceWithCap(listCommands(0), nameOfTheRoller, listCommands.last.toInt)
       case _ => "***You enter wrong command***"
     }
