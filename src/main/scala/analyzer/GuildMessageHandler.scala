@@ -3,14 +3,14 @@ package analyzer
 import commands.{HelpCommand, JokeCommand, PlayCommand, WikiCommand}
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
-class MessageAnalyzer {
+class GuildMessageHandler {
 
   val playCommand = new PlayCommand()
   val jokeCommand = new JokeCommand()
   val wikiCommand = new WikiCommand()
   val helpCommand = new HelpCommand()
 
-  def analyzeEventAndMakeResponse(event: MessageReceivedEvent): String = {
+  def handleEventAndMakeResponse(event: MessageReceivedEvent): String = {
     val command = event.getMessage.getContentRaw
     val subCommands = command.split(" ").toList
 
@@ -49,7 +49,7 @@ class MessageAnalyzer {
   }
 }
 
-object MessageAnalyzer {
+object GuildMessageHandler {
   def isCommandToBot(event: MessageReceivedEvent): Boolean = {
     val command = event.getMessage.getContentRaw
     command.startsWith("!") && command.length > 1
