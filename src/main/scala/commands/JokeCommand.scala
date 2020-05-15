@@ -5,12 +5,12 @@ import org.json4s.DefaultFormats
 import scala.io.{Codec, Source}
 import org.json4s.native.JsonMethods.parse
 
-class JokeCommand {
+class JokeCommand extends BotCommand {
 
   private val url = "https://official-joke-api.appspot.com/random_joke"
 
 
-  def getRandomJoke: String = {
+  def joke(): String = {
     implicit val codec: Codec = Codec.UTF8
 
     val buffer = Source.fromURL(url)
