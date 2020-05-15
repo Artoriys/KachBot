@@ -1,23 +1,23 @@
 ***Commands which you can use***
 
 ***General***
-joke - show you very funny random joke
-w - Wikipedia search
+**joke** - show you very funny random joke
+**w** - Wikipedia search
 
 ***Audio***
-add - add some music to queue
-join - join to the voice channel
-pause - pause music
-unpause - unpause the music
-leave - leave voice channel
-list - show tracks in queue
-volume - set volume
-skip - skip current track
-reset - delete tracks from queue but not stop current
-shuffle - shuffle tracks in queue
-down - clear queue and stop current track
-np - show current track
+**add** - add some music to queue
+**join** - join to the voice channel
+**pause** - pause music
+**unpause** - unpause the music
+**leave** - leave voice channel
+**list** - show tracks in queue
+**volume** - set volume
+**skip** - skip current track
+**reset** - delete tracks from queue but not stop current
+**shuffle** - shuffle tracks in queue
+**down** - clear queue and stop current track
+**np** - show current track
 
 ***Secrets?***
-gif - not gif at all
-oh - ah-ah
+**gif** - not gif at all
+**oh** - ah-ah
