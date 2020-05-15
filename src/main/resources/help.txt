@@ -20,6 +20,7 @@
 
 ***DnD***
 **2d10** - first is number of rolls, second is type of the dice. Also shows sum of the rolls
+**2d10 cap 6** - filter results by cap
 
 ***Secrets?***
 **gif** - not gif at all

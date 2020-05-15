@@ -57,7 +57,7 @@ object MessageAnalyzer {
 
   def isDiceRollCommand(event: MessageReceivedEvent): Boolean = {
     val command = event.getMessage.getContentRaw
-    val diceRegEx = "^\\d+d\\d+$".r
+    val diceRegEx = "^(\\d+d\\d+)($|\\s.*$)".r
     diceRegEx.matches(command)
   }
 }
