@@ -18,6 +18,9 @@
 **down** - clear queue and stop current track
 **np** - show current track
 
+***DnD***
+**2d10** - first is number of rolls, second is type of the dice. Also shows sum of the rolls
+
 ***Secrets?***
 **gif** - not gif at all
 **oh** - ah-ah

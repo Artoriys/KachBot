@@ -1,6 +1,7 @@
 package listener
 
 import analyzer.MessageAnalyzer
+import commands.DiceCommand
 import dbLogAddon.handlers.LogRepositoryImpl
 import dbLogAddon.model.Message
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
@@ -16,10 +17,16 @@ class TextListener extends ListenerAdapter {
       //Maybe we don't need it anymore
       //logRepository.saveMassage(new Message(event))
 
-      if (MessageAnalyzer.isCommandToBot(event)) {
-        val response = msgAnalyzer.analyzeEventAndMakeResponse(event)
+      event match {
+        case ev if MessageAnalyzer.isCommandToBot(ev) =>
+          val response = msgAnalyzer.analyzeEventAndMakeResponse(event)
+          event.getChannel.sendMessage(response).queue()
 
-        event.getChannel.sendMessage(response).queue()
+        case ev if MessageAnalyzer.isDiceRollCommand(ev) =>
+          val response = new DiceCommand().d(ev)
+          event.getChannel.sendMessage(response).queue()
+
+        case _ => ()
       }
     }
   }
