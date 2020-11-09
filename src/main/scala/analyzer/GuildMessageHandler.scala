@@ -37,6 +37,8 @@ class GuildMessageHandler {
       case "shuffle" => playCommand.shuffle()
       case "down" => playCommand.down(event)
       case "np" => playCommand.np()
+      case "pos" => playCommand.pos(subCommands.last)
+      case "tt" => playCommand.tt()
 
       //Aliases and special commands
       case "gif" => "***I like static. Dynamic is shit***"

@@ -17,6 +17,8 @@
 **shuffle** - shuffle tracks in queue
 **down** - clear queue and stop current track
 **np** - show current track
+**pos** - set track time mark
+**tt** - show track duration and current position
 
 ***DnD***
 **2d10** - first is number of rolls, second is type of the dice. Also shows sum of the rolls

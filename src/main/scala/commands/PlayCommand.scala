@@ -1,5 +1,7 @@
 package commands
 
+import java.time.LocalTime
+
 import audio.KachBotMusicManager
 import com.sedmelluq.discord.lavaplayer.player.{AudioLoadResultHandler, AudioPlayer, DefaultAudioPlayerManager}
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
@@ -9,7 +11,7 @@ import net.dv8tion.jda.api.entities.VoiceChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
 import scala.jdk.CollectionConverters._
-import scala.util.Random
+import scala.util.{Failure, Random, Success, Try}
 
 class PlayCommand extends BotCommand {
 
@@ -31,8 +33,15 @@ class PlayCommand extends BotCommand {
   }
 
   def add(url: String): String = {
-    playerManager.loadItemOrdered(kachMng, url, new KachLoadResultHandler())
-    s"***Track added in queue \n Now we have ${kachMng.scheduler.queue.length + 1} tracks***"
+    playerManager.loadItemOrdered(kachMng, url, new KachLoadResultHandler()).get()
+    s"""***Track "$handleAddedTrack" added in queue""" + s"\n Now we have ${kachMng.scheduler.queue.length} tracks***"
+  }
+
+  def handleAddedTrack: String = {
+    Try(kachMng.scheduler.queue.last) match {
+      case Failure(_) => kachMng.scheduler.audioPlayer.getPlayingTrack.getInfo.title
+      case Success(value) => value.getInfo.title
+    }
   }
 
   def pause(): String = {
@@ -99,6 +108,52 @@ class PlayCommand extends BotCommand {
     skip()
     "***Shutting down***"
   }
+
+  def pos(time: String): String = {
+    Option(kachMng.audioPlayer.getPlayingTrack) match {
+      case Some(track) => setTrackTime(time, track)
+      case None => "***No track playing now!***"
+    }
+  }
+
+  def tt(): String = {
+    kachMng.audioPlayer.getPlayingTrack match {
+      case track: AudioTrack => constructDurations(track.getDuration, track.getPosition)
+      case _ => "***No track playing!***"
+    }
+  }
+
+  def constructDurations(trackDuration: Long, currentPos: Long): String = {
+    val trackDurSec = LocalTime.ofSecondOfDay(trackDuration / 1000)
+    val currentPosSec = LocalTime.ofSecondOfDay(currentPos / 1000)
+
+    s"***Current track position is: $currentPosSec\nTrack duration is: $trackDurSec***"
+  }
+
+
+  def setTrackTime(time: String, track: AudioTrack): String =
+    Try(parseToMillis(time)) match {
+      case Failure(_) => "***Something went wrong\nCheck your time***"
+      case Success(millis) =>
+        track.setPosition(millis)
+        s"***Setting track time to $time***"
+    }
+
+  def parseToMillis(time: String): Long = {
+    val times = time.split(":").map(_.toInt)
+
+    assert(times.isInstanceOf[Array[Int]])
+
+    matchingSeconds(times) * 1000
+  }
+
+  def matchingSeconds(times: Array[Int]): Int =
+    times.length match {
+      case 1 => LocalTime.of(0, 0, times(0)).toSecondOfDay
+      case 2 => LocalTime.of(0, times(0), times(1)).toSecondOfDay
+      case 3 => LocalTime.of(times(0), times(1), times(2)).toSecondOfDay
+      case _ => throw new IllegalArgumentException
+    }
 
   private def pickVoiceChannel(event: MessageReceivedEvent): VoiceChannel = {
     val guild = event.getGuild
