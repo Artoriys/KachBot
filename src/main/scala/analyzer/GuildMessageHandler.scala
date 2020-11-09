@@ -45,6 +45,7 @@ class GuildMessageHandler {
       case "oh" => "***Ah-ah***"
       case "dawai" => playCommand.add("https://www.youtube.com/watch?v=b5I4ql_XI24")
       case "marry" => "***Popins?***"
+      case "kawai" => playCommand.add("https://www.youtube.com/watch?v=9lNZ_Rnr7Jc")
 
       case _ => s"***I don't know this command. Try use !help***"
     }
