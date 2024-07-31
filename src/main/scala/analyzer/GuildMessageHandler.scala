@@ -1,6 +1,7 @@
 package analyzer
 
 import commands.{HelpCommand, JokeCommand, PlayCommand, WikiCommand}
+import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 
 class GuildMessageHandler {
@@ -11,6 +12,7 @@ class GuildMessageHandler {
   val helpCommand = new HelpCommand()
 
   def handleEventAndMakeResponse(event: MessageReceivedEvent): String = {
+    Message.suppressContentIntentWarning()
     val command = event.getMessage.getContentRaw
     val subCommands = command.split(" ").toList
 

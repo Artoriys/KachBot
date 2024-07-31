@@ -1,25 +1,31 @@
 package commands
 
 import java.time.LocalTime
-
 import audio.KachBotMusicManager
 import com.sedmelluq.discord.lavaplayer.player.{AudioLoadResultHandler, AudioPlayer, DefaultAudioPlayerManager}
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException
 import com.sedmelluq.discord.lavaplayer.track.{AudioPlaylist, AudioTrack}
-import net.dv8tion.jda.api.entities.VoiceChannel
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import org.apache.log4j.{LogManager, Logger}
 
 import scala.jdk.CollectionConverters._
 import scala.util.{Failure, Random, Success, Try}
 
 class PlayCommand extends BotCommand {
+  @transient protected lazy val log: Logger = LogManager.getLogger(getClass)
 
   val playerManager: DefaultAudioPlayerManager = new DefaultAudioPlayerManager()
+  val ytSourceManager = new dev.lavalink.youtube.YoutubeAudioSourceManager()
+  playerManager.registerSourceManager(ytSourceManager)
+
   val kachMng = new KachBotMusicManager(playerManager)
   val player: AudioPlayer = kachMng.audioPlayer
 
-  AudioSourceManagers.registerRemoteSources(playerManager)
+  AudioSourceManagers.registerRemoteSources(playerManager,
+    classOf[com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager]
+  )
 
   def join(event: MessageReceivedEvent): String = {
     val guild = event.getGuild
@@ -33,7 +39,7 @@ class PlayCommand extends BotCommand {
   }
 
   def add(url: String): String = {
-    playerManager.loadItemOrdered(kachMng, url, new KachLoadResultHandler()).get()
+    playerManager.loadItem(url, new KachLoadResultHandler()).get()
     s"""***Track "$handleAddedTrack" added in queue""" + s"\n Now we have ${kachMng.scheduler.queue.length} tracks***"
   }
 
@@ -171,9 +177,14 @@ class PlayCommand extends BotCommand {
 
     override def playlistLoaded(playlist: AudioPlaylist): Unit = {}
 
-    override def noMatches(): Unit = {}
+    override def noMatches(): Unit = {
+      println("No matches")
+    }
 
-    override def loadFailed(exception: FriendlyException): Unit = {}
+    override def loadFailed(exception: FriendlyException): Unit = {
+      println(exception)
+      println(exception.getStackTrace.foreach(println))
+    }
   }
 
 }

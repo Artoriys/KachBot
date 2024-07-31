@@ -2,7 +2,6 @@ package listener
 
 import analyzer.GuildMessageHandler
 import commands.DiceCommand
-import dbLogAddon.handlers.LogRepositoryImpl
 import dbLogAddon.model.Message
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
@@ -11,7 +10,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 import scala.collection.mutable
 
 class TextListener extends ListenerAdapter {
-  private val logRepository = new LogRepositoryImpl
   private val guildsMap = mutable.Map.empty[Guild, GuildMessageHandler]
 
   override def onMessageReceived(event: MessageReceivedEvent): Unit = {
